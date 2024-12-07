@@ -12,6 +12,7 @@ SBR_WEBDRIVER = os.getenv("SBR_WEBDRIVER")
 def scrape_website(website):
     print("Connecting to Scraping Browser...")
     sbr_connection = ChromiumRemoteConnection(SBR_WEBDRIVER, "goog", "chrome")
+    
     with Remote(sbr_connection, options=ChromeOptions()) as driver:
         driver.get(website)
         print("Waiting captcha to solve...")
@@ -24,8 +25,7 @@ def scrape_website(website):
         )
         print("Captcha solve status:", solve_res["value"]["status"])
         print("Navigated! Scraping page content...")
-        html = driver.page_source
-        return html
+        return driver.page_source
 
 
 def extract_body_content(html_content):
